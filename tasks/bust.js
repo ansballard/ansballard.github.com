@@ -11,14 +11,13 @@ gulp.task("bustJS", ["buildJS"], function() {
       fileName: "script.hash.json",
       transform: function(obj) {
         var newObj = {};
-        console.log(obj);
         for(var hash in obj) {
           newObj[hash.split("/")[hash.split("/").length - 1]] = obj[hash];
         }
         return newObj;
       }
     }))
-    .pipe(gulp.dest("hashes/"))
+    .pipe(gulp.dest(config.dist.hash))
   ;
 });
 
@@ -35,7 +34,7 @@ gulp.task("bustCSS", ["buildCSS"], function() {
         return newObj;
       }
     }))
-    .pipe(gulp.dest("hashes/"))
+    .pipe(gulp.dest(config.dist.hash))
   ;
 });
 

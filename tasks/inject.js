@@ -7,13 +7,14 @@ var config = require("../gulpconfig");
 
 gulp.task("injectJS", ["bustJS"], function() {
   "use strict";
-  var hash = require("../hashes/script.hash.json")["script.min.js"];
+  var hash = require("../" + config.dist.hash + "script.hash.json")["script.min.js"];
+  hash = hash ? hash.substr(0, 10) : hash;
   return gulp.src("./index.html")
     .pipe(plumber())
     .pipe(inject(gulp.src(config.dist.js, {read: false}), {
       transform: function(filepath) {
         var fp = filepath.split("/");
-        return "<script type=\"text/js\" src=\"dist/" + fp[fp.length - 1] + "?hash=" + hash + "\"></script>";
+        return "<script type=\"text/javascript\" src=\"dist/" + fp[fp.length - 1] + "?hash=" + hash + "\"></script>";
       }
     }))
     .pipe(gulp.dest("./"))
@@ -22,7 +23,8 @@ gulp.task("injectJS", ["bustJS"], function() {
 
 gulp.task("injectCSS", ["bustCSS"], function() {
   "use strict";
-  var hash = require("../hashes/style.hash.json")["style.min.css"];
+  var hash = require("../" + config.dist.hash + "script.hash.json")["script.min.js"];
+  hash = hash ? hash.substr(0, 10) : hash;
   return gulp.src("./index.html")
     .pipe(plumber())
     .pipe(inject(gulp.src(config.dist.css, {read: false}), {
