@@ -8,7 +8,16 @@ gulp.task("cacheTemplates", ["cleanTemplate"], function() {
   return gulp.src(config.src.template)
     .pipe(plumber())
     .pipe(templateCache({
-      module: config.dist.module
+      module: config.dist.module,
+      transformUrl: function(url) {
+        if(url.indexOf("/") !== -1) {
+          return url.split("/")[url.split("/").length - 1];
+        } else if(url.indexOf("\\") !== -1) {
+          return url.split("\\")[url.split("\\").length - 1];
+        } else {
+          return url;
+        }
+      }
     }))
     .pipe(gulp.dest(config.dist.template))
 });

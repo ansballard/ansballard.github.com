@@ -1,6 +1,12 @@
 (function() {
 
-  angular.module("profile", ["ngRoute", "ngAnimate"])
+  angular.module("profile", [
+    "ngRoute", "ngAnimate",
+
+    "profile.api",
+    "profile.resume",
+    "profile.sidebar"
+  ])
     .config(profileConfig);
 
   profileConfig.$inject = ["$routeProvider", "$locationProvider"];
@@ -10,7 +16,7 @@
       .when("/", {
         templateUrl: "resume.template.html",
         controller: "ResumeCtrl",
-        controllerAs: "resumectrl",
+        controllerAs: "vm",
         bindToController: true
       })
       .otherwise({
