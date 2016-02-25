@@ -1,0 +1,27 @@
+{
+  "name": "ansballard-ghpages",
+  "version": "1.0.0",
+  "description": "Github profile page for Aaron Ballard",
+  "main": "index.html",
+  "scripts": {
+    "start": "see ./index.html",
+    "build": "node ./scripts/build.js",
+    "watch": "watch \"npm run build\" ./md/",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ansballard/ansballard.github.com.git"
+  },
+  "author": "Aaron Ballard",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ansballard/ansballard.github.com/issues"
+  },
+  "homepage": "https://github.com/ansballard/ansballard.github.com#readme",
+  "devDependencies": {
+    "bluebird": "^3.3.1",
+    "marked": "^0.3.5",
+    "watch": "^0.17.1"
+  }
+}
