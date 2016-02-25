@@ -10,6 +10,7 @@ I have a Bachelor's in Computer Science from [Morehead State University](morehea
 
 ### Contact
 
-- [@ansballard](twitter.com/ansballard)
-- [linkedin.com/in/ansballard](https://www.linkedin.com/in/ansballard)
+- [Github @ansballard](https://github.com/ansballard)
+- [Twitter @ansballard](https://twitter.com/ansballard)
+- [LinkedIn @ansballard](https://www.linkedin.com/in/ansballard)
 - [ans.ballard@gmail.com](mailto:ans.ballard@gmail.com)

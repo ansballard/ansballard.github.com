@@ -4,7 +4,6 @@
   "description": "Github profile page for Aaron Ballard",
   "main": "index.html",
   "scripts": {
-    "start": "see ./index.html",
     "build": "node ./scripts/build.js",
     "watch": "watch \"npm run build\" ./md/",
     "prepublish": "npm run build"
