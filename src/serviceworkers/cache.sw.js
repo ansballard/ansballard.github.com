@@ -1,4 +1,6 @@
-const version = "v1::";
+import pkg from "../../package.json";
+
+const version = `v${pkg.version}::`;
 
 self.addEventListener("install", event => {
 	event.waitUntil(

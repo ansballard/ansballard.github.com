@@ -1,5 +1,15 @@
 # Changelog
 
+### 0.0.2 (2/27/2016)
+
+**Features Implemented**
+
+- none
+
+**Bugs Fixed**
+
+- Service worker now gets cache version from `package.json`
+
 ### 0.0.1 (2/27/2016)
 
 **Features Implemented**
