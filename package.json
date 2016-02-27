@@ -4,9 +4,14 @@
   "description": "Github profile page for Aaron Ballard",
   "main": "index.html",
   "scripts": {
-    "build": "node ./scripts/build.js",
-    "watch": "watch \"npm run build\" ./md/",
-    "prepublish": "npm run build"
+    "start": "firefox index.html",
+    "build:md": "node ./scripts/build.js",
+    "watch:md": "watch \"npm run build\" ./md/",
+    "build:css": "postcss -u postcss-import -u postcss-cssnext ./src/css/entry.css > ./dist/bundle.css",
+    "predeploy:css": "trash ./dist/uncss.css",
+    "deploy:css": "postcss -u postcss-import -u postcss-cssnext ./src/css/entry.css > ./dist/bundle.css",
+    "postdeploy:css": "uncss -s ./dist/bundle.css ./index.html | cssnano > ./dist/uncss.css",
+    "prepublish": "npm run build:md"
   },
   "repository": {
     "type": "git",
@@ -20,7 +25,13 @@
   "homepage": "https://github.com/ansballard/ansballard.github.com#readme",
   "devDependencies": {
     "bluebird": "^3.3.1",
+    "cssnano-cli": "^1.0.3",
+    "html-minifier": "^1.2.0",
     "marked": "^0.3.5",
+    "postcss-cli": "^2.5.1",
+    "postcss-cssnext": "^2.4.0",
+    "postcss-import": "^8.0.2",
+    "uncss": "^0.13.0",
     "watch": "^0.17.1"
   }
 }
