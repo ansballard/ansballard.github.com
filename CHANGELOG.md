@@ -1,5 +1,15 @@
 # Changelog
 
+### 0.0.3 (2/27/2016)
+
+**Features Implemented**
+
+- none
+
+**Bugs Fixed**
+
+- Added activate function to remove old versions
+
 ### 0.0.2 (2/27/2016)
 
 **Features Implemented**
