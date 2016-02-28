@@ -1,5 +1,16 @@
 # Changelog
 
+### 0.0.4 (2/27/2016)
+
+**Features Implemented**
+
+- Added a social media bar in the header
+- Removed the contact section
+
+**Bugs Fixed**
+
+- fixed service worker not pulling in `package.json` via browserify
+
 ### 0.0.3 (2/27/2016)
 
 **Features Implemented**

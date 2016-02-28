@@ -1,0 +1,19 @@
+.social-wrapper {
+  position: absolute;
+}
+.social-item {
+  position: relative;
+  padding: 0 5px;
+}
+.social-link {
+  color: #FFFFFF;
+}
+.fancy-username {
+  position: absolute;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+.social-link:hover .fancy-username {
+  opacity: 0.7;
+  transform: translateY(-20px);
+}
