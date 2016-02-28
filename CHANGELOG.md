@@ -1,5 +1,17 @@
 # Changelog
 
+### 0.0.5 (2/27/2016)
+
+**Features Implemented**
+
+- Flattened the page
+- Header is solid blue, links are green, headers are blue
+- Footer attribution is changed
+
+**Bugs Fixed**
+
+- none
+
 ### 0.0.4 (2/27/2016)
 
 **Features Implemented**
