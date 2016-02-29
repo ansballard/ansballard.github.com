@@ -1,5 +1,15 @@
 # Changelog
 
+### 0.0.6 (2/28/2016)
+
+**Features Implemented**
+
+- Moved social wrapper to centered and removed absolute position
+
+**Bugs Fixed**
+
+- none
+
 ### 0.0.5 (2/27/2016)
 
 **Features Implemented**
