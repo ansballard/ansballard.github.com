@@ -6,29 +6,23 @@
   "scripts": {
     "start": "python -m SimpleHTTPServer",
     "spec": "node ./scripts/specs.js",
-    "": "",
     "build:md": "node ./scripts/build.js",
     "watch:md": "watch \"npm run build\" ./src/md/",
-    "": "",
-    "build:js": "browserify ./src/js/main.js -t [babelify] -o ./dist/bundle.js",
-    "watch:js": "watchify ./src/js/main.js -t [babelify] -o ./dist/bundle.js",
-    "deploy:js": "browserify ./src/js/main.js -t [babelify] | uglifyjs --screw-ie8 > ./dist/bundle.js",
-    "": "",
+    "build:js": "browserify ./src/js/ghpages.module.js -t [babelify] -t [partialify] -o ./dist/bundle.js",
+    "watch:js": "watchify ./src/js/ghpages.module.js -t [babelify] -t [partialify] -o ./dist/bundle.js",
+    "deploy:js": "browserify ./src/js/ghpages.module.js -t [babelify] -t [partialify] | uglifyjs --screw-ie8 > ./dist/bundle.js",
     "build:sw": "browserify ./src/serviceworkers/cache.sw.js -t [babelify] -o ./cache.sw.js",
     "watch:sw": "watchify ./src/serviceworkers/cache.sw.js -t [babelify] -o ./cache.sw.js",
     "deploy:sw": "browserify ./src/serviceworkers/cache.sw.js -t [babelify] | uglifyjs --screw-ie8 > ./cache.sw.js",
-    "": "",
     "build:css": "postcss -u postcss-import -u postcss-cssnext ./src/css/entry.css > ./dist/bundle.css",
     "watch:css": "watch \"npm run build:css\" ./src/css",
     "predeploy:css": "trash ./dist/bundle.css",
     "deploy:css": "postcss -u postcss-import -u postcss-cssnext ./src/css/entry.css > ./dist/temp.css",
     "postdeploy:css": "uncss -s ./dist/temp.css ./index.html | cssnano > ./dist/bundle.css",
-    "": "",
     "build": "concurrently \"npm run build:md\" \"npm run build:js\" \"npm run build:sw\" && npm run build:css",
     "watch": "concurrently \"npm run watch:md\" \"npm run watch:js\" \"npm run watch:sw\" \"npm run watch:css\"",
     "deploy": "concurrently \"npm run build:md\" \"npm run deploy:js\" \"npm run deploy:sw\" && npm run deploy:css",
     "postdeploy": "npm run spec",
-    "": "",
     "prepublish": "npm run deploy"
   },
   "repository": {
@@ -50,8 +44,11 @@
     "concurrently": "^2.0.0",
     "cssnano": "^3.5.2",
     "cssnano-cli": "^1.0.3",
+    "glob": "^7.0.0",
     "html-minifier": "^1.2.0",
     "marked": "^0.3.5",
+    "mkdirp": "^0.5.1",
+    "partialify": "^3.1.6",
     "postcss": "^5.0.17",
     "postcss-cli": "^2.5.1",
     "postcss-cssnext": "^2.4.0",
@@ -60,5 +57,9 @@
     "uglify-js": "^2.6.2",
     "uncss": "^0.13.0",
     "watch": "^0.17.1"
+  },
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angular-route": "^1.5.0"
   }
 }
