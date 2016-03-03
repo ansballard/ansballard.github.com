@@ -5,6 +5,7 @@
   "main": "index.html",
   "scripts": {
     "start": "python -m SimpleHTTPServer",
+    "spec": "node ./scripts/specs.js",
     "": "",
     "build:md": "node ./scripts/build.js",
     "watch:md": "watch \"npm run build\" ./src/md/",
@@ -22,6 +23,7 @@
     "build": "concurrently \"npm run build:md\" \"npm run build:js\" \"npm run build:sw\" && npm run build:css",
     "watch": "concurrently \"npm run watch:md\" \"npm run watch:js\" \"npm run watch:sw\" \"npm run watch:css\"",
     "deploy": "concurrently \"npm run build:md\" \"npm run deploy:js\" \"npm run deploy:sw\" && npm run deploy:css",
+    "postdeploy": "npm run spec",
     "prepublish": "npm run deploy"
   },
   "repository": {
