@@ -1,5 +1,16 @@
 # Changelog
 
+### 0.0.7 (3/2/2016)
+
+**Features Implemented**
+
+- Added `scripts/specs.js` to output CSS Compression specs
+- Added spacing to `package.json` for legible scripts (have I already done that?)
+
+**Bugs Fixed**
+
+- none
+
 ### 0.0.6 (2/28/2016)
 
 **Features Implemented**

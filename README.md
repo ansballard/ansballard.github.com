@@ -2,8 +2,14 @@
 
 ### Build System
 
-blah
+- Browserify
+- UglifyJS2
+- PostCSS
+- UnCSS
+- cssnano
+- marked
+- html-minifier
 
-### Spec Functions
+### Compression Specs
 
-blah
+Compression size and percentages can be found in `compressionSpecs.md`, and are regenerated based on `scripts/specs.js` on each `npm run deploy`.
