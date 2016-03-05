@@ -50,7 +50,7 @@ fs.readFileAsync("./src/css/entry.css", "utf8")
 					});
 			})
       .then(css => {
-        return fs.writeFileAsync("./compressionSpecs.md", mdOutput, "utf8");
+        return fs.writeFileAsync("./data/compressionSpecs.md", mdOutput, "utf8");
       })
       .catch(e => {
         console.log("Error:", e);

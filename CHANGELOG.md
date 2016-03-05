@@ -1,5 +1,18 @@
 # Changelog
 
+### 0.1.0 (3/4/2016)
+
+**Features Implemented**
+
+- It's a blog!
+- Added posts
+- Added a data folder for specs and post mapping
+- Added a posts route for listing posts
+
+**Bugs Fixed**
+
+- none
+
 ### 0.0.7 (3/2/2016)
 
 **Features Implemented**
