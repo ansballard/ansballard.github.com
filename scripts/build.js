@@ -22,6 +22,12 @@ marked.setOptions({
   }
 });
 
+fs.readFileAsync("index.html", "utf8")
+  .then(html => html.replace(/dist\/bundle\.js\?v=\d+\.\d+\.\d+/, `dist/bundle.js?v=${version}`))
+  .then(html => html.replace(/dist\/bundle\.css\?v=\d+\.\d+\.\d+/, `dist/bundle.css?v=${version}`))
+  .then(html => fs.writeFileAsync("index.html", html, "utf8"))
+;
+
 glob("./src/md/**/*.md", (err, files) => {
   files.forEach(filepath => {
     fs.readFileAsync(filepath, "utf8")

@@ -9,6 +9,7 @@
 **Bugs Fixed**
 
 - Added specific selector ignores so filesize is ~17% and still working
+- Added versioning back to the script and css references on build
 
 ### 0.1.1 (3/9/2016)
 
