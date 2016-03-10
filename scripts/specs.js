@@ -15,7 +15,7 @@ const fs = Promise.promisifyAll(require("fs"));
 let mdOutput = "## CSS Compression Specs\r\n\r\n|Step|Size in Bytes|Compression %|\r\n|---|---|---|\r\n";
 let largestTotal;
 
-const uncssIgnores = [/\.main-content\sh\d/, /\.hljs/, /code/, /pre/, /\.lang\-/];
+const uncssIgnores = [/\.main-content\sh\d/, /\.hljs/, /code/, /pre/, /\.lang\-/, /\.adding/, /\.removing/];
 
 trash(["./dist/bundle.css"])
 	.then(() => fs.readFileAsync("./src/css/entry.css", "utf8"))

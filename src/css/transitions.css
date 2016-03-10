@@ -1,0 +1,9 @@
+.adding, .removing {
+  transition: opacity 0.3s ease;
+}
+.adding {
+  opacity: 1;
+}
+.removing {
+  opacity: 0;
+}

@@ -5,6 +5,7 @@
 **Features Implemented**
 
 - Switched from angular to `page.js` for routing and rendering
+- Fade in and out on page change
 
 **Bugs Fixed**
 
