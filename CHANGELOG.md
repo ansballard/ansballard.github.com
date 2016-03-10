@@ -1,5 +1,19 @@
 # Changelog
 
+### 0.1.1 (3/9/2016)
+
+**Features Implemented**
+
+- Moved all css deployment/postcss/uncss to `scripts/specs.js`
+  - Might rename, but it does output specs...
+- Social media is now `_target`
+- Added syntax highlighting
+- Use `http-server` so all dependencies are node
+
+**Bugs Fixed**
+
+- Added specific selector ignores so filesize is ~17% and still working
+
 ### 0.1.0 (3/4/2016)
 
 **Features Implemented**
