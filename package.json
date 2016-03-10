@@ -1,6 +1,6 @@
 {
   "name": "ansballard-ghpages",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Github profile page for Aaron Ballard",
   "main": "index.html",
   "scripts": {
@@ -10,10 +10,10 @@
     "build:md": "node ./scripts/build.js",
     "watch:md": "watch \"npm run build\" ./src/md/",
     "prebuild:js": "npm run posts",
-    "build:js": "browserify ./src/js/ghpages.module.js -t [babelify] -o ./dist/bundle.js",
-    "watch:js": "watchify ./src/js/ghpages.module.js -t [babelify] -o ./dist/bundle.js",
+    "build:js": "browserify ./src/js/entry.js -t [babelify] -o ./dist/bundle.js",
+    "watch:js": "watchify ./src/js/entry.js -t [babelify] -o ./dist/bundle.js",
     "predeploy:js": "npm run posts",
-    "deploy:js": "browserify ./src/js/ghpages.module.js -t [babelify] | uglifyjs --screw-ie8 > ./dist/bundle.js",
+    "deploy:js": "browserify ./src/js/entry.js -t [babelify] | uglifyjs --screw-ie8 > ./dist/bundle.js",
     "build:sw": "browserify ./src/serviceworkers/cache.sw.js -t [babelify] -o ./cache.sw.js",
     "watch:sw": "watchify ./src/serviceworkers/cache.sw.js -t [babelify] -o ./cache.sw.js",
     "deploy:sw": "browserify ./src/serviceworkers/cache.sw.js -t [babelify] | uglifyjs --screw-ie8 > ./cache.sw.js",
@@ -59,12 +59,10 @@
     "trash-cli": "^1.2.1",
     "uglify-js": "^2.6.2",
     "uncss": "^0.13.0",
-    "watch": "^0.17.1"
+    "watch": "^0.17.1",
+    "watchify": "^3.7.0"
   },
   "dependencies": {
-    "angular": "^1.5.0",
-    "angular-route": "^1.5.0",
-    "react": "^0.14.7",
-    "react-router": "^2.0.0"
+    "page": "^1.6.4"
   }
 }

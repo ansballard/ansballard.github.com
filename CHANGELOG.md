@@ -1,5 +1,15 @@
 # Changelog
 
+### 0.2.0 (3/9/2016)
+
+**Features Implemented**
+
+- Switched from angular to `page.js` for routing and rendering
+
+**Bugs Fixed**
+
+- Added specific selector ignores so filesize is ~17% and still working
+
 ### 0.1.1 (3/9/2016)
 
 **Features Implemented**
