@@ -1,6 +1,6 @@
 {
   "name": "ansballard-ghpages",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Github profile page for Aaron Ballard",
   "main": "index.html",
   "scripts": {
@@ -14,6 +14,7 @@
     "watch:js": "watchify ./src/js/entry.js -t [babelify] -o ./dist/bundle.js",
     "predeploy:js": "npm run posts",
     "deploy:js": "browserify ./src/js/entry.js -t [babelify] | uglifyjs --screw-ie8 > ./dist/bundle.js",
+    "deploy:js:r": "browserify ./src/js/entry.js -t [rollupify] -t [babelify] | uglifyjs --screw-ie8 > ./dist/bundle.js",
     "build:sw": "browserify ./src/serviceworkers/cache.sw.js -t [babelify] -o ./cache.sw.js",
     "watch:sw": "watchify ./src/serviceworkers/cache.sw.js -t [babelify] -o ./cache.sw.js",
     "deploy:sw": "browserify ./src/serviceworkers/cache.sw.js -t [babelify] | uglifyjs --screw-ie8 > ./cache.sw.js",
@@ -55,6 +56,7 @@
     "postcss-cli": "^2.5.1",
     "postcss-cssnext": "^2.4.0",
     "postcss-import": "^8.0.2",
+    "rollupify": "^0.1.0",
     "trash": "^3.4.1",
     "trash-cli": "^1.2.1",
     "uglify-js": "^2.6.2",

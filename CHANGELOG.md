@@ -1,5 +1,15 @@
 # Changelog
 
+### 0.2.1 (3/9/2016)
+
+**Features Implemented**
+
+- Added rollupify, trimmed 1kb off `bundle.js` for free
+
+**Bugs Fixed**
+
+- none
+
 ### 0.2.0 (3/9/2016)
 
 **Features Implemented**
