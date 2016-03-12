@@ -65,7 +65,7 @@ trash(["./dist/bundle.css"])
 				});
 				return css;
 			})
-      .then(css => fs.writeFileAsync("./data/compressionSpecs.md", mdOutput, "utf8"))
+      .then(css => fs.writeFileAsync("./data/specs.css.md", mdOutput, "utf8"))
       .catch(e => {
         console.log("Error:", e);
       });

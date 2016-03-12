@@ -1,5 +1,16 @@
 # Changelog
 
+### 0.2.2 (3/11/2016)
+
+**Features Implemented**
+
+- Added tags, ignored by the build script and added to the post data
+- Switched to rollup for `deploy:js`, went from 15kb to 10kb, holy shit
+
+**Bugs Fixed**
+
+- none
+
 ### 0.2.1 (3/9/2016)
 
 **Features Implemented**

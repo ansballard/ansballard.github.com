@@ -1,3 +1,7 @@
+---
+tags: build system,fluff,blogging
+---
+
 # Blogging With Style
 #### Offline, Single Page, Minified Goodness
 
