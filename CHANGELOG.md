@@ -1,5 +1,16 @@
 # Changelog
 
+### 0.2.3 (3/15/2016)
+
+**Features Implemented**
+
+- Added a `new-post` script that uses prompts
+- Added styling to package.json that should actually stick
+
+**Bugs Fixed**
+
+- Removed some unused dev packages
+
 ### 0.2.2 (3/11/2016)
 
 **Features Implemented**
