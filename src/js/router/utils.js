@@ -10,7 +10,6 @@ export function loadView(url, cb) {
     .join(" ")
     .trim()
   ;
-  console.log(domRoot.className);
   setTimeout(() => {
     const xhr = new XMLHttpRequest();
     xhr.addEventListener("load", function() {
@@ -26,7 +25,6 @@ export function loadView(url, cb) {
       .join(" ")
       .trim()
     ;
-    console.log(domRoot.className);
   }, 300);
 }
 

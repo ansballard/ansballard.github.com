@@ -3,7 +3,7 @@ tags: build system,fluff,blogging
 ---
 
 # Blogging With Style
-#### Offline, Single Page, Minified Goodness
+### Offline, Single Page, Minified Goodness
 
 I've created a lot of strange things since I've gotten into web development. Usually it starts with an unachievable goal, and ends with a nonsensical git repo full of dirty code and remorse. That's not what I want to write about today though. Today I want to talk about a site that started as the smallest possible project I could think of. And if you're reading this, you're already using it.
 
