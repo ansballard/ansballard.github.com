@@ -1,5 +1,16 @@
 # Changelog
 
+### 0.2.5 (5/1/2016)
+
+**Features Implemented**
+
+- Moved to a single build script
+  - uses libs for each file type/action
+
+**Bugs Fixed**
+
+- Removed some unused dev packages
+
 ### 0.2.4 (3/16/2016)
 
 **Features Implemented**
