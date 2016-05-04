@@ -11,14 +11,14 @@ import keypress from "keypress";
 import { writeFile } from "fs";
 
 import { javascript } from "./lib/javascript";
-// import { serviceworkers } from "./lib/serviceworkers";
+import { serviceworkers } from "./lib/serviceworkers";
 import { css } from "./lib/css";
 import { html } from "./lib/html";
 import { post } from "./lib/post";
 
 let builds = {
   js: buildJavascript,
-  // serviceworkers: buildServiceWorkers,
+  serviceworkers: buildServiceWorkers,
   css: buildCSS,
   html: buildHTML
 };
@@ -30,7 +30,7 @@ program
 .option("-j, --javascript", "Build Javascript")
 .option("-c, --css", "Build CSS")
 .option("-h, --html", "Build HTML")
-// .option("-s, --serviceworkers", "Build Service Workers")
+.option("-s, --serviceworkers", "Build Service Workers")
 .option("-a, --all", "All (JS, CSS, HTML)")
 .option("-w, --watch", "Watch for Changes")
 .option("-p, --post", "New Post")
@@ -46,7 +46,7 @@ if(program.watch) {
   }
   spinner.start();
   keypress(process.stdin);
-  
+
   process.stdin.on("keypress", (ch, key) => {
     if (key && key.name === "q") {
       spinner.stop();
@@ -60,7 +60,7 @@ if(program.post) {
 }
 
 if(program.all) {
-  program.javascript = program.css = program.html = true;
+  program.javascript = program.css = program.html = program.serviceworkers = true;
 }
 
 if(program.javascript) {
@@ -75,18 +75,18 @@ if(program.javascript) {
   }
 }
 
-// if(program.serviceworkers) {
-//   buildServiceWorkers({
-//     entry: "src/serviceworkers/cache.sw.js",
-//     minify: program.minify
-//   });
-//   if(program.watch) {
-//     watchFileType({
-//       dirName: "serviceworkers",
-//       ext: "js"
-//     });
-//   }
-// }
+if(program.serviceworkers) {
+  buildServiceWorkers({
+    entry: "src/serviceworkers/cache.sw.js",
+    minify: program.minify
+  });
+  if(program.watch) {
+    watchFileType({
+      dirName: "serviceworkers",
+      ext: "js"
+    });
+  }
+}
 
 if(program.css) {
   buildCSS({
@@ -127,16 +127,16 @@ function buildJavascript(opts = {}) {
   ]));
 }
 
-// function buildServiceWorkers(opts = {}) {
-//   return serviceworkers({
-//     entry: opts.entry,
-//     minify: opts.minify
-//   })
-//   .then(result => writeFileAsync("cache.sw.js", result))
-//   .catch(e => {
-//     console.log(e);
-//   })
-// }
+function buildServiceWorkers(opts = {}) {
+  return serviceworkers({
+    entry: opts.entry,
+    minify: opts.minify
+  })
+  .catch(e => {
+    console.log(e);
+  })
+  .then(result => writeFileAsync("cache.sw.js", result));
+}
 
 function buildCSS(opts = {}) {
   return css({

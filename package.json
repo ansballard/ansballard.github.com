@@ -1,6 +1,6 @@
 {
   "name": "ansballard-ghpages",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Github profile page for Aaron Ballard",
   "main": "index.html",
   "scripts": {

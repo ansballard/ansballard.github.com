@@ -1,5 +1,15 @@
 # Changelog
 
+### 0.2.6 (5/2/2016)
+
+**Features Implemented**
+
+- Serviceworkers scripts now works
+
+**Bugs Fixed**
+
+- Had to add rollup json for service workers
+
 ### 0.2.5 (5/1/2016)
 
 **Features Implemented**

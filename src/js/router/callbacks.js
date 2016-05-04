@@ -5,7 +5,6 @@ import postList from "../../../data/posts";
 import {loadView, insertListAfter} from "./utils";
 
 export function index() {
-  console.log("index");
   loadView("/dist/partials/index.template.html");
 }
 

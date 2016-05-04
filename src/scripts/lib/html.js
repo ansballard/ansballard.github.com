@@ -58,7 +58,7 @@ export function html(opts ={}) {
           .join("/"))
           .then(() => html)
         )
-        .then(html => 
+        .then(html =>
           writeFileAsync(`${filepath.replace("./src/md/", "./dist/partials/").replace(".md", ".template.html")}`, html, "utf8")
         );
       });
