@@ -1,5 +1,3 @@
-
-
 import { version as vers } from "../../package.json";
 
 const version = `v${vers}::`;
@@ -10,7 +8,7 @@ self.addEventListener("install", event => {
 		.open(`${version}ansballard`)
 		.then(cache => cache.addAll([
 			"/",
-			"/dist/uncss.css",
+			"/dist/bundle.css",
 			"/dist/bundle.js"
 		]))
 	);
