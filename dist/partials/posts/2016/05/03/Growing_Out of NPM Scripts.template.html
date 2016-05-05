@@ -1,0 +1,125 @@
+<h1 id="growing-out-of-npm-scripts">Growing Out of NPM Scripts</h1>
+<h4 id="the-great-wall-of-scripts">The Great Wall of Scripts</h4>
+<p>Several months ago I started moving a few of my old projects from Gulp to a set of &quot;standard&quot; <code>npm run</code> scripts. Where once I had multiple verbose files for building my javascript and css, was a list of <code>build</code>, <code>watch</code>, and <code>deploy</code> lines for each file format. It seemed so much simpler. Not to mention the portability for new projects. So I ran with it, converting everything I touched to a single list of commands.</p>
+<pre><code class="lang-javascript"><span class="hljs-string">"scripts"</span>: {
+  <span class="hljs-string">"build:js"</span>: <span class="hljs-string">"browserify src/entry.js -t partialify -t babelify -o dist/bundle.js"</span>,
+  <span class="hljs-string">"watch:js"</span>: <span class="hljs-string">"watchify src/entry.js -t partialify -t babelify -o dist/bundle.js"</span>,
+  <span class="hljs-string">"deploy:js"</span>: <span class="hljs-string">"browserify src/entry.js -t partialify -t babelify | uglifyjs &gt; dist/bundle.js"</span>,
+  /<span class="hljs-keyword">*</span> CSS, backend, etc <span class="hljs-keyword">*</span>/
+}
+</code></pre>
+<p>This went well for a while. Concatenating and minifying frontend assets was as simple as copying the same list of scripts and following a standard directory structure. No config, no extra files, just some extra lines in <code>package.json</code>. But that leaves out things like cache busting, uncss, and generally things that don&#39;t work strictly through a cli.</p>
+<p>So I added a scripts folder, then a script to run uncss. But suddenly my clean single file solution was gone. So I could either skip uncss, and transfer twice as much CSS as necessary. Or I could ditch the single file idea and try something new. It&#39;s safe to say I chose option two.</p>
+<h3 id="the-fun-begins">The Fun Begins</h3>
+<p>Obviously one option would be to use something like webpack. A simple command, mostly plug and play with a little configuration. But webpack never made much sense to me, and you can&#39;t go wrong with getting some practice writing Node scripts. So I made a separate lib files for each file format, and a central file to call them.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">javascript</span>(<span class="hljs-params">opts = {}</span>) </span>{
+  <span class="hljs-keyword">return</span> rollup.rollup({
+    <span class="hljs-attribute">entry</span>: opts.entry, <span class="hljs-comment">// path to entry file</span>
+    <span class="hljs-attribute">plugins</span>: [
+      nodeResolve(), <span class="hljs-comment">// allows npm packages</span>
+      commonjs(), <span class="hljs-comment">// allows commonjs packages</span>
+      babel({ <span class="hljs-comment">// transpiles es2015</span>
+        <span class="hljs-attribute">exclude</span>: <span class="hljs-string">"node_modules/**"</span>,
+        <span class="hljs-attribute">babelrc</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attribute">presets</span>: [<span class="hljs-string">"es2015-rollup"</span>]
+      })
+    ]
+  })
+  .then(bundle =&gt; bundle.generate({
+    <span class="hljs-attribute">format</span>: <span class="hljs-string">"cjs"</span>,
+    <span class="hljs-attribute">sourceMap</span>: <span class="hljs-literal">true</span>
+  }))
+  <span class="hljs-comment">/* optionally minifies output */</span>
+  .then(obj =&gt; opts.minify ? uglifyjs.minify(obj.code, {
+    <span class="hljs-attribute">inSourceMap</span>: <span class="hljs-built_in">JSON</span>.parse(obj.map),
+    <span class="hljs-attribute">outSourceMap</span>: <span class="hljs-string">"bundle.js.map"</span>,
+    <span class="hljs-attribute">fromString</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attribute">mangle</span>: <span class="hljs-literal">true</span>
+  }) : obj);
+  <span class="hljs-comment">/* Returns { code, map } */</span>
+}
+</code></pre>
+<p>So the above file takes an entry file, and returns transpiled javascript and a sourcemap. Nice and functional. For now the options are determined via command line arguments, but one of the beauties of this modularity means a GUI or even a server could call this function. So if ever I needed to make my build system accessible to users not familiar with a cli, it would take minimal effort to switch.</p>
+<pre><code class="lang-javascript">program <span class="hljs-comment">// use commander to get cli args</span>
+.option(<span class="hljs-string">"-m, --minify"</span>, <span class="hljs-string">"Minify"</span>)
+.option(<span class="hljs-string">"-j, --javascript"</span>, <span class="hljs-string">"Build Javascript"</span>)
+.option(<span class="hljs-string">"-w, --watch"</span>, <span class="hljs-string">"Watch for Changes"</span>)
+.parse(process.argv);
+
+<span class="hljs-keyword">if</span>(program.javascript) { <span class="hljs-comment">// so file formats can be specified</span>
+  buildJavascript({
+    <span class="hljs-attribute">entry</span>: <span class="hljs-string">"src/js/entry.js"</span>,
+    <span class="hljs-attribute">minify</span>: program.minify
+  });
+  <span class="hljs-keyword">if</span>(program.watch) {
+    watchFileType({ <span class="hljs-comment">// watching for changes, shown later</span>
+      <span class="hljs-attribute">ext</span>: <span class="hljs-string">"js"</span>
+    });
+  }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">buildJavascript</span>(<span class="hljs-params">opts = {}</span>) </span>{
+  <span class="hljs-keyword">return</span> javascript({
+    <span class="hljs-attribute">entry</span>: opts.entry,
+    <span class="hljs-attribute">minify</span>: opts.minify
+  })
+  .then(obj =&gt; Promise.all([ <span class="hljs-comment">// writes the transpiled code and sourcemaps</span>
+    writeFileAsync(<span class="hljs-string">"dist/bundle.js"</span>, obj.code),
+    writeFileAsync(<span class="hljs-string">"dist/bundle.js.map"</span>, obj.map)
+  ]));
+}
+</code></pre>
+<p>So this allows for running your build scripts whenever you want with a single script. Except you&#39;ll usually be rebuilding your files as your go. This is where watch comes in, so you don&#39;t have to keep rerunning as you make changes. And since the build scripts are separate, it&#39;s just a matter of wrapping that call.</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">watchFileType</span>(<span class="hljs-params">opts = {}</span>) </span>{
+  watch.watchTree(<span class="hljs-string">`src/<span class="hljs-subst">${opts.dirName || opts.srcExt || opts.ext}</span>`</span>, { <span class="hljs-comment">// watch the source files for the given file format</span>
+    <span class="hljs-attribute">ignoreDotFiles</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attribute">ignoreUnreadableDir</span>: <span class="hljs-literal">true</span>
+  }, (f, curr, prev) =&gt; {
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> f !== <span class="hljs-string">"object"</span> || prev !== <span class="hljs-literal">null</span> || curr !== <span class="hljs-literal">null</span>) { <span class="hljs-comment">// an if case for when a file is changed, added, or deleted</span>
+      spinner.color = <span class="hljs-string">"yellow"</span>;
+      spinner.text = <span class="hljs-string">`Building <span class="hljs-subst">${(opts.srcExt || opts.ext).toUpperCase()}</span>`</span>; <span class="hljs-comment">// show when changes happen</span>
+      builds[opts.ext]({ <span class="hljs-comment">// map build scripts to file extension</span>
+        <span class="hljs-attribute">entry</span>: <span class="hljs-string">`src/<span class="hljs-subst">${opts.dirName || opts.ext}</span>/entry.<span class="hljs-subst">${opts.ext}</span>`</span>,
+        <span class="hljs-attribute">minify</span>: program.minify
+      })
+      .then(() =&gt; {
+        spinner.color = <span class="hljs-string">"white"</span>;
+        spinner.text = restingSpinnerMessage; <span class="hljs-comment">// changes are finished</span>
+      })
+      .catch(e =&gt; {
+        <span class="hljs-built_in">console</span>.log(e);
+        spinner.color = <span class="hljs-string">"red"</span>;
+        spinner.text = <span class="hljs-string">`Error Building <span class="hljs-subst">${(opts.srcExt || opts.ext).toUpperCase()}</span>`</span>; <span class="hljs-comment">// notify the users of errors, but don't exit</span>
+      });
+    }
+  });
+}
+</code></pre>
+<h3 id="getting-fancy">Getting Fancy</h3>
+<p>And there&#39;s what wraps the build scripts, which means all you have to do is specify file types to build, and whether they should be rebuilt on changes. So what&#39;s left? What is the least user friendly part of running continuous scripts in Node? At least for me, it&#39;s never knowing how many times you have to smash <code>Ctrl+C</code> before the script really stops, or your terminal crashes. But what can we do about that?</p>
+<pre><code class="lang-javascript">
+
+<span class="hsp">const restingSpinnerMessage = <span class="hljs-string">"Watching: `Q` to quit"</span><span class="hljs-comment">;</span>
+const spinner = ora(restingSpinnerMessage)<span class="hljs-comment">;</span>
+
+<span class="hljs-keyword">if</span>(program.watch) {
+  spinner.start()<span class="hljs-comment">;</span>
+  keypress(process.stdin)<span class="hljs-comment">;</span>
+
+  process.stdin.<span class="hljs-keyword">on</span>(<span class="hljs-string">"keypress"</span>, (ch, key) =&gt; {
+    <span class="hljs-keyword">if</span> (key &amp;&amp; key.name === <span class="hljs-string">"q"</span>) {
+      spinner.<span class="hljs-keyword">stop</span>()<span class="hljs-comment">;</span>
+      process.exit(<span class="hljs-number">0</span>)<span class="hljs-comment">;</span>
+    }
+  })<span class="hljs-comment">;</span>
+}
+
+<span class="hljs-comment">/* ... */</span>
+
+<span class="hljs-keyword">if</span>(program.watch) {
+  process.stdin.setRawMode(true)<span class="hljs-comment">;</span>
+  process.stdin.<span class="hljs-keyword">resume</span>()<span class="hljs-comment">;</span>
+}</span>
+</code></pre>
+<p>Well that&#39;s a nice little code snippet, but what&#39;s it for? Well, as long as you specify <code>--watch</code>, it will intercept stdin, read the character codes, and cleanly stop the script if the key pressed is <code>Q</code>. It will also start up <code>ora</code>, which means no long lists of console logs, just a single line in the terminal that can be updated. And that&#39;s a general overview of the build system this site uses. So if you want to see the rest of the build scripts, or if any of the snippets don&#39;t make sense out of context, just check the <code>src/scripts</code> folder at <a href="https://github.com/ansballard/ansballard.github.com">the site&#39;s repo</a>.</p>
+<p>Thanks for reading!</p>
