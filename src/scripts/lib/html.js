@@ -27,7 +27,7 @@ marked.setOptions({
   }
 });
 
-export function html(opts ={}) {
+export default function html(opts = {}) {
 
   return Promise.all([
 
@@ -63,5 +63,6 @@ export function html(opts ={}) {
         );
       });
     })
-  ]);
+  ])
+  .then(() => opts);
 }

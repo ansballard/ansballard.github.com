@@ -10,17 +10,16 @@ import ora from "ora";
 import keypress from "keypress";
 import { writeFile } from "fs";
 
-import { javascript } from "./lib/javascript";
-import { serviceworkers } from "./lib/serviceworkers";
-import { css } from "./lib/css";
-import { html } from "./lib/html";
-import { post } from "./lib/post";
+import javascript from "./lib/javascript";
+import css from "./lib/css";
+import html from "./lib/html";
+import post from "./lib/post";
 
 let builds = {
-  js: buildJavascript,
-  serviceworkers: buildServiceWorkers,
-  css: buildCSS,
-  html: buildHTML
+  // js: buildJavascript,
+  // serviceworkers: buildServiceWorkers,
+  // css: buildCSS,
+  // html: buildHTML
 };
 
 const writeFileAsync = denodeify(writeFile);
@@ -64,95 +63,71 @@ if(program.all) {
 }
 
 if(program.javascript) {
-  buildJavascript({
+  javascript({
     entry: "src/js/entry.js",
-    minify: program.minify
+    minify: program.minify,
+    out: "dist/bundle.js"
+  })
+  .then(opts => {
+    if(program.watch) {
+      watchFileType({
+        ext: "js",
+        build: javascript
+      });
+    }
   });
-  if(program.watch) {
-    watchFileType({
-      ext: "js"
-    });
-  }
 }
 
 if(program.serviceworkers) {
-  buildServiceWorkers({
+  javascript({
     entry: "src/serviceworkers/cache.sw.js",
-    minify: program.minify
+    minify: program.minify,
+    out: "sw.js"
+  })
+  .then(opts => {
+    if(program.watch) {
+      watchFileType({
+        dirName: "serviceworkers",
+        ext: "js",
+        build: javascript
+      });
+    }
   });
-  if(program.watch) {
-    watchFileType({
-      dirName: "serviceworkers",
-      ext: "js"
-    });
-  }
 }
 
 if(program.css) {
-  buildCSS({
+  css({
     entry: "src/css/entry.css",
-    minify: program.minify
+    minify: program.minify,
+    out: "dist/bundle.css"
+  })
+  .then(opts => {
+    if(program.watch) {
+      watchFileType({
+        ext: "css",
+        build: css
+      });
+    }
   });
-  if(program.watch) {
-    watchFileType({
-      ext: "css"
-    });
-  }
 }
 if(program.html) {
-  buildHTML({
+  html({
     minify: program.minify
+  })
+  .then(opts => {
+    if(program.watch) {
+      watchFileType({
+        srcExt: "md",
+        ext: "html",
+        build: html
+      });
+    }
   });
-  if(program.watch) {
-    watchFileType({
-      srcExt: "md",
-      ext: "html"
-    });
-  }
 }
 
 if(program.watch) {
   process.stdin.setRawMode(true);
   process.stdin.resume();
-}
-
-function buildJavascript(opts = {}) {
-  return javascript({
-    entry: opts.entry,
-    minify: opts.minify
-  })
-  .then(obj => Promise.all([
-    writeFileAsync("dist/bundle.js", obj.code),
-    writeFileAsync("dist/bundle.js.map", obj.map)
-  ]));
-}
-
-function buildServiceWorkers(opts = {}) {
-  return serviceworkers({
-    entry: opts.entry,
-    minify: opts.minify
-  })
-  .catch(e => {
-    console.log(e);
-  })
-  .then(result => writeFileAsync("cache.sw.js", result));
-}
-
-function buildCSS(opts = {}) {
-  return css({
-    entry: opts.entry,
-    minify: opts.minify
-  })
-  .then(result => writeFileAsync(
-    "dist/bundle.css",
-    result
-  ));
-}
-
-function buildHTML(opts = {}) {
-  return html({
-    minify: program.minify
-  });
 }
 
 function watchFileType(opts = {}) {
@@ -163,10 +138,7 @@ function watchFileType(opts = {}) {
     if (typeof f !== "object" || prev !== null || curr !== null) {
       spinner.color = "yellow";
       spinner.text = `Building ${(opts.srcExt || opts.ext).toUpperCase()}`;
-      builds[opts.ext]({
-        entry: `src/${opts.dirName || opts.ext}/entry.${opts.ext}`,
-        minify: program.minify
-      })
+      opts.build(opts)
       .then(() => {
         spinner.color = "white";
         spinner.text = restingSpinnerMessage;

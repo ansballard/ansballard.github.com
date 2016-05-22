@@ -1,12 +1,12 @@
 {
   "name": "ansballard-ghpages",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Github profile page for Aaron Ballard",
   "main": "index.html",
   "scripts": {
     "start": "http-server ./ -p 8080 -o",
     "cli": "node scripts/cli.js",
-    "build:cli": "browserify --no-bundle-external ./src/scripts/cli.js -t [babelify --presets es2015] -o ./scripts/cli.js",
+    "build:cli": "browserify --no-bundle-external --node ./src/scripts/cli.js -t [babelify --presets es2015] -o ./scripts/cli.js",
     "prepublish": "npm run build:cli && npm run cli -- -am"
   },
   "repository": {
@@ -51,6 +51,7 @@
     "watch": "^0.17.1"
   },
   "dependencies": {
-    "page": "^1.6.4"
+    "page": "^1.6.4",
+    "post-data": "file:./data"
   }
 }

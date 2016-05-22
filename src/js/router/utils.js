@@ -3,6 +3,8 @@
 const domRoot = document.getElementById("domRoot");
 
 export function loadView(url, cb) {
+  let asyncFinished = false;
+  let htmlRes;
   domRoot.className = domRoot.className
     .split(" ")
     .filter(c => c !== "removing" && c !== "adding")
@@ -10,22 +12,39 @@ export function loadView(url, cb) {
     .join(" ")
     .trim()
   ;
-  setTimeout(() => {
-    const xhr = new XMLHttpRequest();
-    xhr.addEventListener("load", function() {
+  const xhr = new XMLHttpRequest();
+  xhr.addEventListener("load", function() {
+    if(asyncFinished) {
       domRoot.innerHTML = this.responseText;
+      toggleFade();
       cb && cb();
-    });
-    xhr.open("GET", url);
-    xhr.send();
-    domRoot.className = domRoot.className
-      .split(" ")
-      .filter(c => c !== "removing" && c !== "adding")
-      .concat("adding")
-      .join(" ")
-      .trim()
-    ;
+    } else {
+      asyncFinished = true;
+      htmlRes = this.responseText;
+    }
+  });
+  xhr.open("GET", url);
+  xhr.send();
+
+  setTimeout(() => {
+    if(asyncFinished) {
+      domRoot.innerHTML = htmlRes;
+      toggleFade();
+      cb && cb();
+    } else {
+      asyncFinished = true;
+    }
   }, 300);
+}
+
+function toggleFade() {
+  domRoot.className = domRoot.className
+    .split(" ")
+    .filter(c => c !== "removing" && c !== "adding")
+    .concat("adding")
+    .join(" ")
+    .trim()
+  ;
 }
 
 export function insertListAfter(el, content) {

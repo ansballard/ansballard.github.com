@@ -1,18 +1,24 @@
 "use strict";
 
 import "core-js/es6/promise";
+import { writeFile } from "fs";
+import denodeify from "denodeify";
 import rollup from "rollup";
 import uglifyjs from "uglify-js";
 import nodeResolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
+import rollupJSON from "rollup-plugin-json";
 import babel from "rollup-plugin-babel";
 
-export function javascript(opts = {}) {
+const writeFileAsync = denodeify(writeFile);
+
+export default function javascript(opts = {}) {
   return rollup.rollup({
     entry: opts.entry,
     plugins: [
       nodeResolve(),
       commonjs(),
+      rollupJSON(),
       babel({
         exclude: "node_modules/**",
         babelrc: false,
@@ -22,12 +28,20 @@ export function javascript(opts = {}) {
   })
   .then(bundle => bundle.generate({
     format: "cjs",
-    sourceMap: true
+    sourceMap: false
   }))
   .then(obj => opts.minify ? uglifyjs.minify(obj.code, {
-    inSourceMap: JSON.parse(obj.map),
-    outSourceMap: "bundle.js.map",
+    inSourceMap: opts.sourcemap ? JSON.parse(obj.map) : undefined,
+    outSourceMap: opts.sourcemap ? `${opts.out}.map` : undefined,
     fromString: true,
     mangle: true
-  }) : obj);
+  }) : obj)
+  .then(obj => Promise.all([
+    writeFileAsync(opts.out, obj.code),
+    opts.sourcemap ? writeFileAsync(`${opts.out}map`, obj.map) : Promise.resolve()
+  ]))
+  .catch(e => {
+    console.log(e);
+  })
+  .then(() => opts);
 }

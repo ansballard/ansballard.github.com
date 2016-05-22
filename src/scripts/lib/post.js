@@ -14,7 +14,7 @@ const p = "src/md/posts/"
 const today = `${d.getFullYear()}/${("0"+(d.getMonth()+1)).slice(-2)}/${("0"+(d.getDate())).slice(-2)}/`;
 let tags = "";
 
-export function post(opts = {}) {
+export default function post(opts = {}) {
 	return promptAsync(["title", "tags"])
 	.then(opts => {
 		if(!opts.title) {

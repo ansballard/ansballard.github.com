@@ -1,2 +1,3 @@
 node_modules/
-data/posts.js
+npm-debug.log
+.DS_Store

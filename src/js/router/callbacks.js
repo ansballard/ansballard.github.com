@@ -2,7 +2,7 @@
 
 import postList from "../../../data/posts";
 
-import {loadView, insertListAfter} from "./utils";
+import { loadView, insertListAfter } from "./utils";
 
 export function index() {
   loadView("/dist/partials/index.template.html");

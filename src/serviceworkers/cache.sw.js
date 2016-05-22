@@ -7,7 +7,8 @@ self.addEventListener("install", event => {
 		caches
 		.open(`${version}ansballard`)
 		.then(cache => cache.addAll([
-			"/",
+			"/dist/partials/404.template.html",
+			"/dist/partials/index.template.html",
 			"/dist/bundle.css",
 			"/dist/bundle.js"
 		]))
@@ -22,18 +23,17 @@ self.addEventListener("fetch", event => {
 		caches
 		.match(event.request)
 		.then(cached => {
-			let networked = fetch(event.request)
+			return cached || fetch(event.request)
 				.then(fetchedFromNetwork, unableToResolve)
 				.catch(unableToResolve);
-			return cached || networked;
 
 			function fetchedFromNetwork(response) {
-				let cacheCopy = response.clone();
+				const cacheCopy = response.clone();
 				caches
-					.open(`${version}pages`)
-					.then(function add(cache) {
-						cache.put(event.request, cacheCopy);
-					});
+				.open(`${version}pages`)
+				.then(cache => {
+					cache.put(event.request, cacheCopy);
+				});
 				return response;
 			}
 
@@ -54,12 +54,12 @@ self.addEventListener("activate", event => {
 	event.waitUntil(
 		caches
 		.keys()
-		.then(keys => {
-			return Promise.all(
+		.then(keys =>
+			Promise.all(
 				keys
 				.filter(key => !key.startsWith(version))
 				.map(key => caches.delete(key))
-			);
-		})
+			)
+		)
 	);
 });

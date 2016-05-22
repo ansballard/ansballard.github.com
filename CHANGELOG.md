@@ -1,5 +1,16 @@
 # Changelog
 
+### 0.2.8 (5/22/2016)
+
+**Features Implemented**
+
+- Better timing for route changes
+- renamed built service worker files
+
+**Bugs Fixed**
+
+- none
+
 ### 0.2.6 (5/2/2016)
 
 **Features Implemented**
