@@ -2,6 +2,7 @@
 
 import "core-js/es6/promise";
 import { writeFile } from "fs";
+import { red } from "chalk";
 import denodeify from "denodeify";
 import rollup from "rollup";
 import uglifyjs from "uglify-js";
@@ -41,7 +42,7 @@ export default function javascript(opts = {}) {
     opts.sourcemap ? writeFileAsync(`${opts.out}map`, obj.map) : Promise.resolve()
   ]))
   .catch(e => {
-    console.log(e);
+    console.log(`\nJavascript Error: ${red(e.message)}`);
   })
   .then(() => opts);
 }

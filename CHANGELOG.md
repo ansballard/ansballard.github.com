@@ -1,5 +1,18 @@
 # Changelog
 
+### 0.2.9 (5/26/2016)
+
+**Features Implemented**
+
+- build-posts is now in the cli
+- moved index.html to src
+- silent http-server
+
+**Bugs Fixed**
+
+- incorrect sw url
+- commas on postlist page
+
 ### 0.2.8 (5/22/2016)
 
 **Features Implemented**

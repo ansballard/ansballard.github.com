@@ -17,7 +17,8 @@ export function posts() {
   <a href="${item.path}">
     ${item.title} [${new Date(item.date).getMonth()+1}/${new Date(item.date).getDate()}/${new Date(item.date).getFullYear()}]
   </a>
-</li>`));
+</li>`)
+    .join(""));
     if(postList.length > 5) {
       insertListAfter(document.getElementById("older-posts"), postList
       .slice(5)
@@ -26,7 +27,8 @@ export function posts() {
   <a href="${item.path}">
     ${item.title} [${new Date(item.date).getMonth()+1}/${new Date(item.date).getDate()}/${new Date(item.date).getFullYear()}]
   </a>
-</li>`));
+</li>`)
+      .join(""));
     }
   });
 }

@@ -14,13 +14,7 @@ import javascript from "./lib/javascript";
 import css from "./lib/css";
 import html from "./lib/html";
 import post from "./lib/post";
-
-let builds = {
-  // js: buildJavascript,
-  // serviceworkers: buildServiceWorkers,
-  // css: buildCSS,
-  // html: buildHTML
-};
+import data from "./lib/data";
 
 const writeFileAsync = denodeify(writeFile);
 
@@ -58,27 +52,24 @@ if(program.post) {
   post();
 }
 
-if(program.all) {
-  program.javascript = program.css = program.html = program.serviceworkers = true;
-}
-
-if(program.javascript) {
-  javascript({
+if(program.all || program.javascript) {
+  data()
+  .then(() => javascript({
     entry: "src/js/entry.js",
     minify: program.minify,
     out: "dist/bundle.js"
-  })
+  }))
   .then(opts => {
     if(program.watch) {
-      watchFileType({
+      watchFileType(Object.assign({}, opts, {
         ext: "js",
         build: javascript
-      });
+      }));
     }
   });
 }
 
-if(program.serviceworkers) {
+if(program.all || program.serviceworkers) {
   javascript({
     entry: "src/serviceworkers/cache.sw.js",
     minify: program.minify,
@@ -86,16 +77,16 @@ if(program.serviceworkers) {
   })
   .then(opts => {
     if(program.watch) {
-      watchFileType({
+      watchFileType(Object.assign({}, opts, {
         dirName: "serviceworkers",
         ext: "js",
         build: javascript
-      });
+      }));
     }
   });
 }
 
-if(program.css) {
+if(program.all || program.css) {
   css({
     entry: "src/css/entry.css",
     minify: program.minify,
@@ -103,24 +94,24 @@ if(program.css) {
   })
   .then(opts => {
     if(program.watch) {
-      watchFileType({
+      watchFileType(Object.assign({}, opts, {
         ext: "css",
         build: css
-      });
+      }));
     }
   });
 }
-if(program.html) {
+if(program.all || program.html) {
   html({
     minify: program.minify
   })
   .then(opts => {
     if(program.watch) {
-      watchFileType({
+      watchFileType(Object.assign({}, opts, {
         srcExt: "md",
         ext: "html",
         build: html
-      });
+      }));
     }
   });
 }
@@ -144,7 +135,7 @@ function watchFileType(opts = {}) {
         spinner.text = restingSpinnerMessage;
       })
       .catch(e => {
-        console.log(e);
+        console.log(`\nWatch Error: ${red(e.message)}`);
         spinner.color = "red";
         spinner.text = `Error Building ${(opts.srcExt || opts.ext).toUpperCase()}`;
       });

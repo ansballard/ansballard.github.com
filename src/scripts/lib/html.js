@@ -5,6 +5,7 @@ import marked from "marked";
 import highlightjs from "highlight.js";
 import glob from "glob";
 import { minify as htmlmin } from "html-minifier";
+import { red } from "chalk";
 import denodeify from "denodeify";
 import mkdirp from "mkdirp";
 import { readFile, writeFile } from "fs";
@@ -31,9 +32,9 @@ export default function html(opts = {}) {
 
   return Promise.all([
 
-    readFileAsync("index.html", "utf8")
-    .then(html => html.replace(/dist\/bundle\.js\?v=\d+\.\d+\.\d+/, `dist/bundle.js?v=${version}`))
-    .then(html => html.replace(/dist\/bundle\.css\?v=\d+\.\d+\.\d+/, `dist/bundle.css?v=${version}`))
+    readFileAsync("src/html/index.html", "utf8")
+    .then(html => html.replace(/dist\/bundle\.js(\?v=\d+\.\d+\.\d+)?/, `dist/bundle.js?v=${version}`))
+    .then(html => html.replace(/dist\/bundle\.css(\?v=\d+\.\d+\.\d+)?/, `dist/bundle.css?v=${version}`))
     .then(html => htmlmin(html, minOptions))
     .then(html => writeFileAsync("index.html", html, "utf8")),
 
@@ -42,7 +43,11 @@ export default function html(opts = {}) {
       files.forEach(filepath => {
         readFileAsync(filepath, "utf8")
         .then(content => {
-          let lines = content.split("\n");
+          let lines = content
+          .split("\r\n")
+          .join("\n")
+          .split("\n")
+          .filter(line => line.trim() !== "");
           if(lines.indexOf("---") === 0 && lines.indexOf("---", 1) === 2 && lines[1].indexOf("tags") > -1) {
             return lines.splice(3).join("\n");
           } else {
@@ -64,5 +69,8 @@ export default function html(opts = {}) {
       });
     })
   ])
+  .catch(e => {
+    console.log(`\nHTML Error: ${red(e.message)}`);
+  })
   .then(() => opts);
 }

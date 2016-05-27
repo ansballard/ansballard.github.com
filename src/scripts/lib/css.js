@@ -38,8 +38,8 @@ export default function css(opts = {}) {
       writeFileAsync(opts.out, css.css),
       opts.sourcemap ? writeFileAsync(`${opts.out}.map`, css.map) : Promise.resolve()
     ]))
-    .then(() => opts)
     .catch(e => {
-      console.log(e);
-    });
+      console.log(`\nCSS Error: ${red(e.message)}`);
+    })
+    .then(() => opts);
 }
