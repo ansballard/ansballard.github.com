@@ -9,12 +9,12 @@ import { red } from "chalk";
 import denodeify from "denodeify";
 import mkdirp from "mkdirp";
 import { readFile, writeFile } from "fs";
+import { version } from "../../../package.json";
 
 const readFileAsync = denodeify(readFile);
 const writeFileAsync = denodeify(writeFile);
 const mkdirpAsync = denodeify(mkdirp);
 const globAsync = denodeify(glob);
-const version = require("../../../package.json").version;
 
 const minOptions = {
   removeComments: true,
