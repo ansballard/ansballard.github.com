@@ -1,5 +1,17 @@
 # Changelog
 
+### 0.3.0 (7/24/2016)
+
+**Features Implemented**
+
+- filter by tags
+- list tags on postlist page
+- inline images in posts
+
+**Bugs Fixed**
+
+- none
+
 ### 0.2.9 (5/26/2016)
 
 **Features Implemented**
