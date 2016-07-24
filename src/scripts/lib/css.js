@@ -15,7 +15,16 @@ const writeFileAsync = denodeify(writeFile);
 const globAsync = denodeify(glob);
 const uncssAsync = denodeify(uncss);
 
-const uncssIgnores = [/\.main-content\sh\d/, /\.hljs/, /code/, /pre/, /\.lang\-/, /\.adding/, /\.removing/];
+const uncssIgnores = [
+  /\.main-content\sh\d/,
+  /\.hljs/, /code/,
+  /pre/,
+  /\.lang\-/,
+  /\.adding/,
+  /\.removing/,
+  /#domRoot\ img/,
+  /\.postlist-.+/
+];
 
 export default function css(opts = {}) {
     return readFileAsync(opts.entry, "utf8")

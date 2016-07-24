@@ -1,5 +1,5 @@
 ---
-tags: npm,automation,node,workflow
+tags: tech
 ---
 
 # Growing Out of NPM Scripts

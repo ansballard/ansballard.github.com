@@ -1,5 +1,5 @@
 ---
-tags: build system,fluff,blogging
+tags: tech
 ---
 
 # Blogging With Style

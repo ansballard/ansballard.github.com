@@ -1,5 +1,5 @@
 ---
-tags: modwatch,skyrim
+tags: modwatch
 ---
 
 # A Break from Modwatch

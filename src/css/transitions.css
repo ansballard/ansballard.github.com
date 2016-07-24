@@ -1,4 +1,6 @@
-.adding, .removing {
+.adding,
+.removing,
+.postlist-post-link > .post-date {
   transition: opacity 0.3s ease;
 }
 .adding {
@@ -6,4 +8,14 @@
 }
 .removing {
   opacity: 0;
+}
+.postlist-post-link > .post-date {
+  opacity: 0;
+}
+.postlist-post-link:hover > .post-date {
+  opacity: 1;
+  text-decoration: underline;
+}
+.postlist-post-link:hover {
+  text-decoration: none;
 }
