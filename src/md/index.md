@@ -1,8 +1,8 @@
 ### Current Position
-I've been a frontend web developer at [PDS Energy](https://pdsenergy.com) since 2014. Most of my work involves creating modern web applications with Angular, jQuery, or vanilla Javascript. Most projects require some amount of backend work as well, which is either in Classic ASP, C# .NET, or occasionally NodeJS. I've also written multiple developer utilities using Node, specifically Electron for desktop apps.
-
-### Current Interests
-I've spent a lot of time perfecting my development workflow. At the moment I'm nailing down the file structure and build scripts for multiplatform Angular apps, based on the [John Papa Styleguide](https://github.com/johnpapa/angular-styleguide) and using ES6 modules transpiled with browserify. You can find an example at my [electron-base](https://github.com/ansballard/electron-base) repo.
+I've been a frontend web developer at [PDS Energy](https://pdsenergy.com) since 2014. I work on Javascript-driven sites using RESTful APIs, internal tools using NodeJS and Electron, as well as legacy sites using Classic ASP. I've put together the build system we use on a majority of our sites, helped develop major features for multiple sites, and always strived to stay on the edge of new and useful web tech.
 
 ### Background
-I have a Bachelor's in Computer Science from [Morehead State University](https://moreheadstate.edu), where I studied for 4 years. Immediately after graduation, my wife and I moved to Austin, TX. After several months of job searching, we were both hired in our respective fields, and have been working ever since.
+I have a Bachelor's in Computer Science from [Morehead State University](https://moreheadstate.edu), where I studied for 4 years. Immediately after graduation, my wife and I moved to Austin, TX, where we both found jobs in our respective fields. Since then I've continued to dive into the latest in web development, whether it be hackathons, meetups, podcasts, blogs, newsletters, etc.
+
+### About Me
+A lot of my time is split between my wife and my dog. But I also like to walk local trails, work at coffee shops, play computer games, and travel. The most fun I've had in a long time was a recent road trip to the Grand Canyon with my wife. As much as I love my laptop and websites, it's nice to be able to take some time to escape and be with other people (and dogs).

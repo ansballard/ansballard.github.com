@@ -1,6 +1,18 @@
 # Changelog
 
-### 0.3.0 (7/24/2016)
+### 0.16.0 (7/24/2016)
+
+**Features Implemented**
+
+- change home page content
+- move tags above older posts
+- remove footer
+
+**Bugs Fixed**
+
+- semver in changelog
+
+### 0.15.0 (7/24/2016)
 
 **Features Implemented**
 
@@ -12,7 +24,7 @@
 
 - none
 
-### 0.2.9 (5/26/2016)
+### 0.14.0 (5/26/2016)
 
 **Features Implemented**
 
@@ -25,7 +37,7 @@
 - incorrect sw url
 - commas on postlist page
 
-### 0.2.8 (5/22/2016)
+### 0.13.0 (5/22/2016)
 
 **Features Implemented**
 
@@ -36,17 +48,18 @@
 
 - none
 
-### 0.2.6 (5/2/2016)
+### 0.12.1 (5/2/2016)
 
 **Features Implemented**
 
-- Serviceworkers scripts now works
+- none
 
 **Bugs Fixed**
 
+- Serviceworkers scripts now works
 - Had to add rollup json for service workers
 
-### 0.2.5 (5/1/2016)
+### 0.12.0 (5/1/2016)
 
 **Features Implemented**
 
@@ -57,7 +70,7 @@
 
 - Removed some unused dev packages
 
-### 0.2.4 (3/16/2016)
+### 0.11.0 (3/16/2016)
 
 **Features Implemented**
 
@@ -69,7 +82,7 @@
 
 - Removed some unused dev packages
 
-### 0.2.3 (3/15/2016)
+### 0.10.0 (3/15/2016)
 
 **Features Implemented**
 
@@ -80,7 +93,7 @@
 
 - Removed some unused dev packages
 
-### 0.2.2 (3/11/2016)
+### 0.9.0 (3/11/2016)
 
 **Features Implemented**
 
@@ -91,7 +104,7 @@
 
 - none
 
-### 0.2.1 (3/9/2016)
+### 0.8.0 (3/9/2016)
 
 **Features Implemented**
 
@@ -101,7 +114,7 @@
 
 - none
 
-### 0.2.0 (3/9/2016)
+### 0.7.0 (3/9/2016)
 
 **Features Implemented**
 
@@ -113,7 +126,7 @@
 - Added specific selector ignores so filesize is ~17% and still working
 - Added versioning back to the script and css references on build
 
-### 0.1.1 (3/9/2016)
+### 0.6.0 (3/9/2016)
 
 **Features Implemented**
 
@@ -127,7 +140,7 @@
 
 - Added specific selector ignores so filesize is ~17% and still working
 
-### 0.1.0 (3/4/2016)
+### 0.5.0 (3/4/2016)
 
 **Features Implemented**
 
@@ -140,7 +153,7 @@
 
 - none
 
-### 0.0.7 (3/2/2016)
+### 0.4.0 (3/2/2016)
 
 **Features Implemented**
 
@@ -161,7 +174,7 @@
 
 - none
 
-### 0.0.5 (2/27/2016)
+### 0.3.0 (2/27/2016)
 
 **Features Implemented**
 
@@ -173,7 +186,7 @@
 
 - none
 
-### 0.0.4 (2/27/2016)
+### 0.2.0 (2/27/2016)
 
 **Features Implemented**
 
@@ -184,7 +197,7 @@
 
 - fixed service worker not pulling in `package.json` via browserify
 
-### 0.0.3 (2/27/2016)
+### 0.1.2 (2/27/2016)
 
 **Features Implemented**
 
@@ -194,7 +207,7 @@
 
 - Added activate function to remove old versions
 
-### 0.0.2 (2/27/2016)
+### 0.1.1 (2/27/2016)
 
 **Features Implemented**
 
@@ -204,7 +217,7 @@
 
 - Service worker now gets cache version from `package.json`
 
-### 0.0.1 (2/27/2016)
+### 0.1.0 (2/27/2016)
 
 **Features Implemented**
 
