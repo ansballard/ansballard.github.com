@@ -2,7 +2,7 @@
   "name": "ansballard-ghpages",
   "version": "0.16.0",
   "description": "Github profile page for Aaron Ballard",
-  "main": "index.html",
+  "main": "src/js/entry.js",
   "scripts": {
     "serve": "firebase serve",
     "build": "webpack",
