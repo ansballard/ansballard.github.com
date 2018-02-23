@@ -1,2 +1,4 @@
-import "./router/config";
+import "./router";
 import "./serviceworker";
+
+import "../css/entry.css";
